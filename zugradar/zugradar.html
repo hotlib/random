@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script src="angularjs/angular.js"></script>
+<script src="jquery/jquery-2.1.0.js"></script>
+
+<title>zugradar page</title>
+</head>
+<body  >
+<script type="text/javascript">
+	zugApp = angular.module("ZugRadarApp", []);
+
+	zugApp.controller("ZugRadarController", function ($scope, trainPositionService) {
+
+		trainPositionService.getTrainPosition(function(data, status, headers, config) {
+					$scope.trains = data.t;
+				});
+	});
+
+
+zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailService) {
+		
+		$scope.trainDetails = new Array();
+
+		//TODO how to do lazy loading??
+		function updateTrainDetail(trainId){
+			trainDetailService.getTrainDetail(trainId, function(data, status, headers, config) {
+			$scope.trainDetails[trainId] = data.look.singletrain[0];
+			});
+			//$scope.trainDetails[trainId] = "this is a detail";
+		}
+
+		for (var i = $scope.trains.length - 1; i >= 0; i--) {
+			updateTrainDetail($scope.trains.n);
+		};
+
+		
+
+		
+	});
+
+
+
+	zugApp.service('trainPositionService', function($http) {
+	
+		function error(data, status, headers, config){
+			alert("Couldn't load data; status: " + status);
+		}
+
+		this.getTrainPosition = function(successCallback){
+			// var url = 'http://zugradar.oebb.at/bin/query.exe/dny?look_minx=8071655&look_maxx=18497681&look_miny=45443394&look_maxy=50442313&tpl=trains2json2&look_productclass=15&look_json=yes&performLocating=1&look_nv=get_zntrainname|yes|attr|81|get_rtonly|yes|zugposmode|2|interval|30000|intervalstep|2000|maxnumberoftrains|500|';
+			
+			var url = 'data.json';		
+
+		    $http({method: 'GET', url: url}).success(successCallback).error(error);
+		};
+	});
+
+	zugApp.service('trainDetailService', function($http) {
+	
+		function error(data, status, headers, config){
+			alert("Couldn't load data; status: " + status);
+		}
+
+		this.getTrainDetail = function(trainId, successCallback){
+			// var url = 'http://zugradar.oebb.at/bin/query.exe/dny?tpl=singletrain2json&performLocating=8&&look_nv=get_rtmsgstatus|yes|get_zntrainname|no|get_rtfreitextmn|yes|get_product|yes|get_realstops|yes|get_rtstoptimes|yes|get_fstop|yes|get_pstop|yes|get_nstop|yes|get_lstop|yes|zugposmode|2|&look_trainid=84/116383/18/19/81&look_requestdate=09.03.14';
+			
+			var url = 'train.json';		
+
+		    $http({method: 'GET', url: url}).success(successCallback).error(error);
+		};
+	});
+
+
+	
+</script>
+
+<div ng-app="ZugRadarApp" ng-controller="ZugRadarController">
+<input type="text" ng-model="destination">
+ 	{{destination}}
+    <div ng-repeat="train in filteredTrains = (trains |  filter:{l:destination})">
+    	<div ng-if="filteredTrains.length > 10">{{train.l}} ({{train.n}})</div>
+    	<div ng-if="filteredTrains.length <= 10" ng-controller="ZugRadarDetailController">{{trainDetails[trains.n]}} </div>
+    
+          
+    </div> 
+    
+</div>
+
+
+</body>
+</html>
