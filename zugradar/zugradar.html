@@ -19,24 +19,18 @@
 
 
 zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailService) {
-		
-		$scope.trainDetails = new Array();
 
-		//TODO how to do lazy loading??
-		function updateTrainDetail(trainId){
-			trainDetailService.getTrainDetail(trainId, function(data, status, headers, config) {
-			$scope.trainDetails[trainId] = data.look.singletrain[0];
-			});
-			//$scope.trainDetails[trainId] = "this is a detail";
-		}
-
-		for (var i = $scope.trains.length - 1; i >= 0; i--) {
-			updateTrainDetail($scope.trains.n);
+		$scope.init = function(trainid){
+			updateTrainDetail(trainid);
 		};
 
-		
+		$scope.trainDetails = new Array();
 
-		
+		function updateTrainDetail(trainId){
+			trainDetailService.getTrainDetail(trainId, function(data, status, headers, config) {
+			$scope.trainDetail = data.look.singletrain[0];
+			});
+		}
 	});
 
 
@@ -80,7 +74,7 @@ zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailServi
  	{{destination}}
     <div ng-repeat="train in filteredTrains = (trains |  filter:{l:destination})">
     	<div ng-if="filteredTrains.length > 10">{{train.l}} ({{train.n}})</div>
-    	<div ng-if="filteredTrains.length <= 10" ng-controller="ZugRadarDetailController">{{trainDetails[trains.n]}} </div>
+    	<div ng-if="filteredTrains.length <= 10" ng-controller="ZugRadarDetailController" ng-init="init(trains.n)">{{trainDetail}} </div>
     
           
     </div> 
