@@ -1,0 +1,43 @@
+{ "look":
+{ "singletrain":
+[
+{
+"trainid" : "84/116383/18/19/81"
+,"x" : "16841461"
+,"y" : "47996239"
+,"name" : "REX 2655"
+,"pstopname" : "Bruck/Leitha"
+,"pstopno" : "8100198"
+,"pdep" : "18:02"
+,"parr" : "18:01"
+,"pdep_d" : "0"
+,"pdep_t" : "18:02"
+,"parr_d" : "0"
+,"parr_t" : "18:01"
+,"nstopname" : "Parndorf Ort"
+,"nstopno" : "8100515"
+,"ndep" : "18:08"
+,"ndep_d" : "0"
+,"narr" : "18:07"
+,"ndep_d" : "0"
+,"ndep_t" : "18:08"
+,"narr_d" : "0"
+,"narr_t" : "18:07"
+,"fstopname" : "Wien Hbf"
+,"fstopno" : "8103000"
+,"fdep" : "17:32"
+,"fdep_d" : "1"
+,"fdep_t" : "17:33"
+,"lstopname" : "Eisenstadt"
+,"lstopno" : "8100231"
+,"larr" : "18:43"
+,"larr_d" : "1"
+,"larr_t" : "18:44"
+,"pass" : "4"
+,"edgeid" : "5"
+,"passproc" : "86"
+,"delay" : "0"
+}
+]
+}
+}
