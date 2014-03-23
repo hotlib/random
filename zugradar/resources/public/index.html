@@ -1,24 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<script src="angularjs/angular.js"></script>
-<script src="jquery/jquery-2.1.0.js"></script>
+<script src="angularjs/angular.min.js"></script>
+<script src="jquery/jquery-2.1.0.min.js"></script>
 <script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="bootstrap-3.1.1/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" type="text/css" href="resources/styles.css">
 <title>Train Search</title>
-
-
-
 
 </head>
 <body>
 <script type="text/javascript">
 	zugApp = angular.module("ZugRadarApp", []);
-
 	zugApp.controller("ZugRadarController", function ($scope, trainPositionService) {
-
 		trainPositionService.getTrainPosition(function(data, status, headers, config) {
 					$scope.trains = data.t;
 				});
@@ -26,11 +22,9 @@
 
 
 zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailService) {
-
 		$scope.init = function(trainid){
 			updateTrainDetail(trainid);
 		};
-
 		function updateTrainDetail(trainId){
 			trainDetailService.getTrainDetail(trainId, function(data, status, headers, config) {
 			$scope.trainDetail = data.look.singletrain[0];
@@ -41,15 +35,12 @@ zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailServi
 
 
 	zugApp.service('trainPositionService', function($http) {
-	
 		function error(data, status, headers, config){
 			alert("Couldn't load data; status: " + status);
 		}
 
 		this.getTrainPosition = function(successCallback){
-			// var url = 'http://zugradar.oebb.at/bin/query.exe/dny?look_minx=8071655&look_maxx=18497681&look_miny=45443394&look_maxy=50442313&tpl=trains2json2&look_productclass=15&look_json=yes&performLocating=1&look_nv=get_zntrainname|yes|attr|81|get_rtonly|yes|zugposmode|2|interval|30000|intervalstep|2000|maxnumberoftrains|500|';
-			
-			var url = 'data.json';		
+			var url = 'http://localhost:8080/train';		
 
 		    $http({method: 'GET', url: url}).success(successCallback).error(error);
 		};
@@ -62,10 +53,7 @@ zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailServi
 		}
 
 		this.getTrainDetail = function(trainId, successCallback){
-			// var url = 'http://zugradar.oebb.at/bin/query.exe/dny?tpl=singletrain2json&performLocating=8&&look_nv=get_rtmsgstatus|yes|get_zntrainname|no|get_rtfreitextmn|yes|get_product|yes|get_realstops|yes|get_rtstoptimes|yes|get_fstop|yes|get_pstop|yes|get_nstop|yes|get_lstop|yes|zugposmode|2|&look_trainid=84/116383/18/19/81&look_requestdate=09.03.14';
-			
-			var url = 'train.json';		
-
+			var url = 'http://localhost:8080/detail/' + trainId.replace(/\//g,"-");
 		    $http({method: 'GET', url: url}).success(successCallback).error(error);
 		};
 	});
@@ -98,7 +86,7 @@ zugApp.controller("ZugRadarDetailController", function ($scope, trainDetailServi
 	    <tr ng-repeat="train in filteredTrains = (trains |  filter:{l:destination})">
 	   		<td>{{train.l}}</td>
 			<td>{{train.n}}</td>
-		  	<td ng-if="filteredTrains.length <= 10" ng-controller="ZugRadarDetailController" ng-init="init(trains.n)">
+		  	<td ng-if="filteredTrains.length <= 10" ng-controller="ZugRadarDetailController" ng-init="init(train.i)">
 	  			<ul>
 	  				<li>Departure: {{trainDetail.pstopname}} - {{trainDetail.pdep_t}} <span ng-if="trainDetail.pdep_d > 0">(delayed {{trainDetail.pdep_d}} minutes)</span></li>
 					<li>Departure: {{trainDetail.nstopname}} - {{trainDetail.ndep_t}} <span ng-if="trainDetail.ndep_d > 0">(delayed {{trainDetail.ndep_d}} minutes)</span></li>
