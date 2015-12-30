@@ -1,0 +1,13 @@
+    AutoComplPop - automatically opens popup menu for completions
+    ctrlp.vim - file, buffer, mru, tag, ... finder for Vim
+    haskell-vim - Haskell syntax and indentation plugin
+    nerdtree - explore filesystem, open files and directories in a window
+    syntastic - syntax checking plugin
+    vim-haskellConceal - display unicode operators in Haskell
+    vim-hoogle - query hoogle and display text
+    bufexplorer - easily switch between buffers
+    delimitMate - automatic closing of quotes, parenthesis, brackets, etc.
+    nerdcommenter - plugin for commenting out of code
+    project - a project perspective in Vim (although I never found real use for it)
+    vim-airline - a rich status/tabline in vim
+    vim-hdevtools - faster reloading of Haskell

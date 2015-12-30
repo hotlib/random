@@ -37,3 +37,5 @@ let g:ctrlp_user_command = 'find %s -type f'
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_cmd = 'CtrlP'
 
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
