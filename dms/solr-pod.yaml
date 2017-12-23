@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dms-solr
+  labels:
+    name: dms-solr
+  namespace: objectify
+spec:
+  containers: 
+    - name: dms-solr
+      image: objectify/dms-solr:2.6.1
+      resources:
+        limits:
+          memory: "512Mi"
+      volumeMounts:
+        - name: dms-solr-data
+          mountPath: /opt/solr/server/solr/develCore
+  volumes:
+    - name: dms-solr-data
+      emptyDir: {}

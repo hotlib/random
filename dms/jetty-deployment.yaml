@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: dms-jetty
+  labels:
+    app: dms-jetty
+  namespace: objectify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dms-jetty
+  template:
+    metadata:
+      labels:
+        app: dms-jetty
+    spec:
+      containers:
+      - name: dms-jetty
+        image: objectify/dms-jetty:2.7.3
+        resources:
+          limits:
+            memory: "896Mi"
+        ports:
+        - containerPort: 8080
+        - containerPort: 9010
+        volumeMounts:
+          - name: dms-doc-repo
+            mountPath: /var/lib/jetty/docRepo
+      volumes:
+        - name: dms-doc-repo
+          emptyDir: {}

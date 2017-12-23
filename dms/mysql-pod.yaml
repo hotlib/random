@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dms-mysql
+  labels:
+    name: dms-mysql
+  namespace: objectify
+spec:
+  containers: 
+    - name: dms-mysql
+      image: mysql:latest
+      resources:
+        limits:
+          memory: "256Mi"
+      env: 
+      - name: "MYSQL_USER"
+        value: "dms"
+      - name: "MYSQL_PASSWORD"
+        value: "XXXXXXXXXXXXXXXXXXXX"
+      - name: "MYSQL_DATABASE"
+        value: "dms"
+      - name: "MYSQL_ROOT_PASSWORD"
+        value: "XXXXXXXXXXXXXXXXXXXX"
+      ports: 
+      - containerPort: 3306
+      volumeMounts:
+        - name: dms-mysql-data
+          mountPath: /var/lib/mysql
+  volumes:
+    - name: dms-mysql-data
+      emptyDir: {}

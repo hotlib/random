@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dms
+  namespace: objectify
+spec:
+  type: NodePort
+  ports:
+    - port: 8877
+      targetPort: 8080
+      nodePort: 30877
+      name: http
+    - port: 9111
+      targetPort: 9010
+      nodePort: 30911
+      name: data
+  selector:
+    name: dms-jetty
