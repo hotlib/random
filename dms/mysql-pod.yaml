@@ -9,6 +9,8 @@ spec:
   containers: 
     - name: dms-mysql
       image: mysql:latest
+      args:
+        - "--ignore-db-dir=lost+found"
       resources:
         limits:
           memory: "256Mi"
@@ -16,11 +18,11 @@ spec:
       - name: "MYSQL_USER"
         value: "dms"
       - name: "MYSQL_PASSWORD"
-        value: "XXXXXXXXXXXXXXXXXXXX"
+        value: "XXXXXXXXXXXXXXXXX"
       - name: "MYSQL_DATABASE"
         value: "dms"
       - name: "MYSQL_ROOT_PASSWORD"
-        value: "XXXXXXXXXXXXXXXXXXXX"
+        value: "XXXXXXXXXXXXXXXXX"
       ports: 
       - containerPort: 3306
       volumeMounts:
@@ -28,4 +30,6 @@ spec:
           mountPath: /var/lib/mysql
   volumes:
     - name: dms-mysql-data
-      emptyDir: {}
+      persistentVolumeClaim:
+        claimName: dms-mysql-claim
+#      emptyDir: {}

@@ -1,20 +1,22 @@
-apiVersion: apps/v1beta2
-kind: Deployment
+#apiVersion: apps/v1beta2
+apiVersion: v1
+#kind: Deployment
+kind: Pod
 metadata:
   name: dms-jetty
   labels:
     app: dms-jetty
   namespace: objectify
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: dms-jetty
-  template:
-    metadata:
-      labels:
-        app: dms-jetty
-    spec:
+  #replicas: 1
+  #selector:
+  #  matchLabels:
+  #    app: dms-jetty
+  #template:
+  #  metadata:
+  #    labels:
+  #      app: dms-jetty
+  #  spec:
       containers:
       - name: dms-jetty
         image: objectify/dms-jetty:2.7.3
@@ -29,4 +31,6 @@ spec:
             mountPath: /var/lib/jetty/docRepo
       volumes:
         - name: dms-doc-repo
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: dms-jetty-claim
+#          emptyDir: {}

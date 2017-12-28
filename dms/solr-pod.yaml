@@ -17,4 +17,7 @@ spec:
           mountPath: /opt/solr/server/solr/develCore
   volumes:
     - name: dms-solr-data
-      emptyDir: {}
+      persistentVolumeClaim:
+        claimName: dms-solr-claim
+#      emptyDir: {}
+
