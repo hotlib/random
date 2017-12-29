@@ -71,7 +71,7 @@ spec:
             command:
             - /bin/bash
             - -c
-            - /ready-probe.sh
+            - nodetool status | grep $POD_IP | awk '$1!="UN" { exit 1; }'
           initialDelaySeconds: 15
           timeoutSeconds: 5
       volumes:
