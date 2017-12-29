@@ -7,7 +7,7 @@ metadata:
   namespace: aai-cassandra
 spec:
   serviceName: cassandra
-  replicas: 2 #3
+  replicas: 3
   selector:
     matchLabels:
       app: cassandra
@@ -64,7 +64,7 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
         volumeMounts:
-          - name: cassandra-data
+          - name: cassandra-data2
             mountPath: /var/lib/cassandra/data
         readinessProbe:
           exec:
@@ -74,6 +74,9 @@ spec:
             - /ready-probe.sh
           initialDelaySeconds: 15
           timeoutSeconds: 5
+      volumes:
+        name: cassandra-data2
+        emptyDir: {}
   volumeClaimTemplates:
    - metadata:
        name: cassandra-data
@@ -83,4 +86,4 @@ spec:
        accessModes: ["ReadWriteOnce"]
        resources:
          requests:
-           storage: 1Gi
+           storage: 4Gi

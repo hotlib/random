@@ -8,7 +8,7 @@ metadata:
   namespace: aai-cassandra
 spec:
   capacity:
-    storage: 1Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
