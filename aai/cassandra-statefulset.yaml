@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: cassandra
@@ -75,15 +75,15 @@ spec:
           initialDelaySeconds: 15
           timeoutSeconds: 5
       volumes:
-        name: cassandra-data2
-        emptyDir: {}
-  volumeClaimTemplates:
-   - metadata:
-       name: cassandra-data
-       annotations:
-         volume.beta.kubernetes.io/storage-class: ""
-     spec:
-       accessModes: ["ReadWriteOnce"]
-       resources:
-         requests:
-           storage: 4Gi
+        - name: cassandra-data2
+          emptyDir: {}
+#  volumeClaimTemplates:
+#   - metadata:
+#       name: cassandra-data
+#       annotations:
+#         volume.beta.kubernetes.io/storage-class: ""
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       resources:
+#         requests:
+#           storage: 4Gi
