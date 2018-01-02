@@ -6,6 +6,9 @@ metadata:
     name: dms-solr
   namespace: objectify
 spec:
+  securityContext:
+    runAsUser: 8983
+    fsGroup: 8983
   containers: 
     - name: dms-solr
       image: objectify/dms-solr:2.6.1
@@ -14,7 +17,7 @@ spec:
           memory: "512Mi"
       volumeMounts:
         - name: dms-solr-data
-          mountPath: /opt/solr/server/solr/develCore
+          mountPath: /opt/solr/server/solr/develCore/data
   volumes:
     - name: dms-solr-data
       persistentVolumeClaim:

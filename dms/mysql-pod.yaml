@@ -18,11 +18,11 @@ spec:
       - name: "MYSQL_USER"
         value: "dms"
       - name: "MYSQL_PASSWORD"
-        value: "XXXXXXXXXXXXXXXXX"
+        value: "XXXXXXXXXXXXXXX"
       - name: "MYSQL_DATABASE"
         value: "dms"
       - name: "MYSQL_ROOT_PASSWORD"
-        value: "XXXXXXXXXXXXXXXXX"
+        value: "XXXXXXXXXXXXXXXXXx"
       ports: 
       - containerPort: 3306
       volumeMounts:
