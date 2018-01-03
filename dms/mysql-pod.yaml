@@ -18,11 +18,11 @@ spec:
       - name: "MYSQL_USER"
         value: "dms"
       - name: "MYSQL_PASSWORD"
-        value: "XXXXXXXXXXXXXXX"
+        value: "df3FCSds43"
       - name: "MYSQL_DATABASE"
         value: "dms"
       - name: "MYSQL_ROOT_PASSWORD"
-        value: "XXXXXXXXXXXXXXXXXx"
+        value: "example"
       ports: 
       - containerPort: 3306
       volumeMounts:
@@ -32,4 +32,4 @@ spec:
     - name: dms-mysql-data
       persistentVolumeClaim:
         claimName: dms-mysql-claim
-#      emptyDir: {}
+

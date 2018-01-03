@@ -12,9 +12,10 @@ spec:
   containers: 
     - name: dms-solr
       image: objectify/dms-solr:2.6.1
-      resources:
-        limits:
-          memory: "512Mi"
+     # is limiting needed at all? 512 Mi is too little
+      #resources:
+    #    limits:
+    #      memory: "512Mi"
       volumeMounts:
         - name: dms-solr-data
           mountPath: /opt/solr/server/solr/develCore/data
@@ -22,5 +23,4 @@ spec:
     - name: dms-solr-data
       persistentVolumeClaim:
         claimName: dms-solr-claim
-#      emptyDir: {}
 

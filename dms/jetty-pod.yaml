@@ -24,9 +24,10 @@ spec:
         image: objectify/dms-jetty:2.7.3
         command: ["/bin/sh", "-c"]
         args: ["mkdir -p /persistent_volume/docRepo; sed -i 's/^\\(docRespositoryRootDir\\s*=\\s*\\).*$/\\1\\/persistent_volume\\/docRepo/' /var/lib/jetty/conf/config.ini; sleep 10; /docker-entrypoint.sh java -jar /usr/local/jetty/start.jar"]
+        #is resource limiting needed? 896 Mi is too little
         #resources:
         #  limits:
-        #    memory: "1896Mi" #zmena 896Mi
+        #    memory: "896Mi" 
         ports:
         - containerPort: 8080
         - containerPort: 9010

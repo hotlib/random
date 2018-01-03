@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dms-nginx-proxy
+  labels:
+    name: dms-nginx-proxy
+  namespace: objectify
+spec:
+  containers: 
+    - name: nginx-ssl-proxy
+      image: objectify/nginx-ssl-proxy:latest
+      env: 
+      - name: "ENABLE_SSL"
+        value: "true"
+      - name: "TARGET_SERVICE"
+        value: "10.59.245.114:8080" #cluster ip of jetty service
+      ports: 
+      - containerPort: 443
+      volumeMounts:
+        - name: nginx-tls
+          mountPath: /etc/secrets/proxycert
+          subPath: cert.crt
+        - name: nginx-tls
+          mountPath: /etc/secrets/proxykey
+          subPath: key.pem
+        - name: nginx-tls
+          mountPath: /etc/secrets/dhparam
+          subPath: dhparam.pem
+  volumes:
+    - name: nginx-tls
+      secret:
+        secretName: nginx-proxy-tls
