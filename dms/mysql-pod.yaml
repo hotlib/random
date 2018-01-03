@@ -18,11 +18,17 @@ spec:
       - name: "MYSQL_USER"
         value: "dms"
       - name: "MYSQL_PASSWORD"
-        value: "df3FCSds43"
+        valueFrom:
+          secretKeyRef:
+            name: mysql-pass
+            key: user_password
       - name: "MYSQL_DATABASE"
         value: "dms"
       - name: "MYSQL_ROOT_PASSWORD"
-        value: "example"
+        valueFrom:
+          secretKeyRef:
+            name: mysql-pass
+            key: root_password
       ports: 
       - containerPort: 3306
       volumeMounts:
