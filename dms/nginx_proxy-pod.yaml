@@ -26,6 +26,9 @@ spec:
         - name: nginx-tls
           mountPath: /etc/secrets/dhparam
           subPath: dhparam.pem
+        - name: nginx-tls
+          mountPath: /etc/letsencrypt/keys.tar.gz
+          subPath: data.tar.gz
   volumes:
     - name: nginx-tls
       secret:
