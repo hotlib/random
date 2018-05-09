@@ -1,0 +1,4 @@
+{
+"cloud-owner": "1",
+"cloud-region-id": "1"
+}

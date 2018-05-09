@@ -1,0 +1,5 @@
+{
+"tenant-id": ${tenantidd},
+"tenant-name": "testtenant",
+"tenant-context": "tenantcontext"
+}

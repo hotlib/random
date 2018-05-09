@@ -1,0 +1,5 @@
+{
+"global-customer-id": "1",
+"subscriber-name": "testcustomer",
+"subscriber-type": "plain"
+}

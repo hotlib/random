@@ -1,0 +1,8 @@
+{
+"vserver-id": "1",
+"vserver-name": "testserver",
+"vserver-name2": "testserver2",
+"vserver-selflink": "testlink",
+"in-maint": false,
+"is-closed-loop-disabled": false
+}

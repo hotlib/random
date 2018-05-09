@@ -1,0 +1,6 @@
+{
+"tenant-id": "${tenantid}",
+"tenant-name": "testtenant",
+"tenant-context": "tenantcontext",
+"resource-version": "${resourceversion}"
+}
