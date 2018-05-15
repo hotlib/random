@@ -8,16 +8,18 @@ class AaiSimulation1 extends Simulation {
 
 	val username = "AAI"
 	val password = "AAI"
-	val tenantIdFeeder = csv("tenant_ids.csv").queue
+	val tenantIdFeeder = csv("tenant_ids.csv").records
 
 	val httpCommon = http.inferHtmlResources(BlackList(""".*\.js""", """.*\.css""", """.*\.gif""", """.*\.jpeg""", """.*\.jpg""", """.*\.ico""", """.*\.woff""", """.*\.(t|o)tf""", """.*\.png"""), WhiteList())
 		.acceptHeader("application/json")
 		.contentTypeHeader("application/json")
 		.userAgentHeader("curl/7.47.0")
+		.disableWarmUp
 
-	val httpServer1 = httpCommon.baseURL("https://127.0.0.1:8443")
+	val httpServer1 = httpCommon.baseURL("https://10.12.6.234:8447")
 
-	val httpServer2 = httpCommon.baseURL("https://127.0.0.1:8443")
+	//val httpServer2 = httpCommon.baseURL("https://127.0.0.1:8443")
+	val httpServer2 = httpCommon.baseURL("https://10.12.6.234:8337")
 
 	val headers_0 = Map(
 	"X-FromAppId" -> "testapp",
@@ -72,38 +74,44 @@ class AaiSimulation1 extends Simulation {
 		.basicAuth(username, password)
 		.check(status.is(200)))
 
-
 	def removeTenant(index: Int): ChainBuilder = exec(getTenant(), deleteTenant(index))
 
 	val scenario1Server1Actions: ChainBuilder = exec(
 		createTenant(), getTenant(),
 		modifyTenant(), getTenant(), getTenant(),
 		modifyTenant(), getTenant(), getTenant(),
-		modifyTenant(), getTenant(), getTenant(),
+		modifyTenant(), getTenant(), getTenant()
 	)
 
 	val scenario1Server2Actions: ChainBuilder = exec(
 		createTenant(), getTenant(),
-		modifyTenant(), getTenant(),
-		modifyTenant(), getTenant(),
-		modifyTenant(), getTenant(),
-		modifyTenant(), getTenant(),
-		modifyTenant(), getTenant(),
+		removeTenant(10), getTenant(),
+		removeTenant(10), getTenant(),
+		removeTenant(10), getTenant(),
+		removeTenant(10), getTenant(),
+		removeTenant(10),
+		getTenant(), modifyTenant(),
+		getTenant(), modifyTenant(),
+		getTenant(), modifyTenant()
 	)
 
 
 	val scenario1Server1 = scenario("Server 1 Scenario 1")
-	.feed(tenantIdFeeder)
+	.foreach(tenantIdFeeder, "tenantid") {
+		exec(flattenMapIntoAttributes("${tenantid}"))
+	}
+	//.feed(tenantIdFeeder)
 	.exec(scenario1Server1Actions)
  	.pause(10)
 
 	val scenario1Server2 = scenario("Server 2 Scenario 1")
-	.feed(tenantIdFeeder)
+	.foreach(tenantIdFeeder, "tenantid") {
+			exec(flattenMapIntoAttributes("${tenantid}"))
+	}
+	//.feed(tenantIdFeeder)
 	.exec(scenario1Server2Actions)
  	.pause(10)
 
-	//setUp(scenario1Server1.inject(atOnceUsers(1)).protocols(httpServer1), scenario1Server2.inject(atOnceUsers(1)).protocols(httpServer2))
-	setUp(scenario1Server1.inject(atOnceUsers(1)).protocols(httpServer1))
-
+	setUp(scenario1Server1.inject(atOnceUsers(1000)).protocols(httpServer1), scenario1Server2.inject(atOnceUsers(1000)).protocols(httpServer2))
 }
 
